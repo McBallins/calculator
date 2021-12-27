@@ -1,5 +1,5 @@
 
-let display = document.getElementById('display');
+const display = document.getElementById('display');
 
 function add(a, b) {
     return a+b;
@@ -17,7 +17,7 @@ function divide(a, b) {
     return a/b;
 };
 
-function operate(a, b, o) {
+function operate(a, o, b) {
     let value;
     if(o === '+') {
         value = add(a, b);
@@ -32,4 +32,27 @@ function operate(a, b, o) {
     };
     display.innerText = value;
     return value;
+};
+
+//Event listeners for buttons, i will need a switch here that changes which variable is being set
+let integerA;
+let integerB;
+integers = document.querySelectorAll('.integer');
+
+function setA() {
+    integers.forEach(integer => {
+        integer.addEventListener('click', event => {
+            integerA = integer.innerText;
+            console.log(integerA);
+    });
+});
+};
+
+function setB() {
+    integers.forEach(integer => {
+        integer.addEventListener('click', event => {
+            integerA = integer.innerText;
+            console.log(integerB);
+    });
+});
 };
