@@ -26,20 +26,25 @@ operators.forEach(operator => {
 });
 
 const equals = document.getElementById('equals')
-equals.addEventListener('click', function eval() {
-    operate(integerA, integerB, operator);
+equals.addEventListener('click', event => {
+    operate(integerA, operatorVal, integerB);
 });
 
 
 const clear = document.getElementById('clear');
 clear.addEventListener('click', function clear() {
     display.innerText = '0';
-    integerA = undefined;
-    integerB = undefined;
+    reset();
 });
 
+function reset() {
+    integerA = undefined;
+    integerB = undefined;
+    operatorVal = undefined;
+}
+
 function add(a, b) {
-    return a+b;
+    return Number(a)+Number(b);
 };
 
 function subtract(a, b) {
@@ -68,6 +73,9 @@ function operate(a, o, b) {
         value = undefined;
     };
     display.innerText = value;
+    integerA = display.innerText;
     return value;
 };
 
+// add the ability for the calculator to display a when a is pressed and not b and then =
+// add the ability to type longer numbers than single digits *may require changes to the current a/b system
