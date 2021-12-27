@@ -1,3 +1,6 @@
+
+let display = document.getElementById('display');
+
 function add(a, b) {
     return a+b;
 };
@@ -15,15 +18,18 @@ function divide(a, b) {
 };
 
 function operate(a, b, o) {
+    let value;
     if(o === '+') {
-        return add(a, b);
+        value = add(a, b);
     } else if(o === '-') {
-        return subtract(a, b);
+        value = subtract(a, b);
     } else if(o === '*') {
-        return multiply(a, b);
+        value = multiply(a, b);
     } else if(o === '/') {
-        return divide(a, b);
+        value = divide(a, b);
     } else {
-        return undefined;
+        value = undefined;
     };
+    display.innerText = value;
+    return value;
 };
