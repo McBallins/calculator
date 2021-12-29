@@ -1,13 +1,12 @@
+let mode = 'a';
+
 const displayA = document.getElementById('displaya');
 const displayB = document.getElementById('displayb');
 const displayOperator = document.getElementById('displayoperator');
 
 let integerA = '';
 let integerB = '';
-let mode = 'a';
-
 const integers = document.querySelectorAll('.integer');
-
 integers.forEach(integer => {
     integer.addEventListener('click', event => {
         if(mode === 'a') {
@@ -16,7 +15,7 @@ integers.forEach(integer => {
         } else {
             integerB = integerB + integer.innerText;
             displayB.innerText = integerB;
-        }
+        };
     });
 });
 
@@ -33,7 +32,7 @@ operators.forEach(operator => {
         } else {
             operatorVal = operator.innerText;
             displayOperator.innerText = operatorVal;
-        }
+        };
     });
 });
 
@@ -42,12 +41,20 @@ equals.addEventListener('click', event => {
     operate(integerA, operatorVal, integerB);
 });
 
+const backspace = document.getElementById('backspace');
+backspace.addEventListener('click', event => {
+    displayB.innerText = displayB.innerText.slice(0,(displayB.innerText.length-1));
+    if(mode === 'a') {
+        integerA = displayB.innerText;
+    } else {
+        integerB = displayB.innerText;
+    };
+});
 
 const clear = document.getElementById('clear');
 clear.addEventListener('click', event => {
     reset();
 });
-
 function reset() {
     integerA = '';
     integerB = '';
@@ -56,22 +63,6 @@ function reset() {
     displayB.innerText = '';
     displayOperator.innerText = '';
     mode = 'a';
-}
-
-function add(a, b) {
-    return Number(a)+Number(b);
-};
-
-function subtract(a, b) {
-    return a-b;
-};
-
-function multiply(a, b) {
-    return a*b;
-};
-
-function divide(a, b) {
-    return a/b;
 };
 
 function operate(a, o, b) {
@@ -93,3 +84,17 @@ function operate(a, o, b) {
     displayA.innerText = value;
     integerA = displayA.innerText;
 };
+function add(a, b) {
+    return Number(a)+Number(b);
+};
+function subtract(a, b) {
+    return a-b;
+};
+function multiply(a, b) {
+    return a*b;
+};
+function divide(a, b) {
+    return a/b;
+};
+
+// mostly need to work on css now
