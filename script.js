@@ -1,4 +1,6 @@
 const displayA = document.getElementById('displaya');
+const displayB = document.getElementById('displayb');
+const displayOperator = document.getElementById('displayoperator');
 
 let integerA = '';
 let integerB = '';
@@ -25,7 +27,10 @@ const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
         mode = 'b';
+        displayB.innerText = displayA.innerText;
+        displayA.innerText = '';
         operatorVal = operator.innerText;
+        displayOperator.innerText = operatorVal;
         console.log(operatorVal);
     });
 });
@@ -38,7 +43,6 @@ equals.addEventListener('click', event => {
 
 const clear = document.getElementById('clear');
 clear.addEventListener('click', function clear() {
-    displayA.innerText = '0';
     reset();
 });
 
@@ -46,6 +50,10 @@ function reset() {
     integerA = '';
     integerB = '';
     operatorVal = '';
+    displayA.innerText = '0';
+    displayB.innerText = '';
+    displayOperator.innerText = '';
+    mode = 'a';
 }
 
 function add(a, b) {
@@ -75,9 +83,13 @@ function operate(a, o, b) {
     } else if(o === '/') {
         value = divide(a, b);
     };
-    displayA.innerText = value;
-    integerA = '';
-    console.log(value);
+    let temp = operatorVal;
+    reset();
+    operatorVal = temp;
+    displayOperator.innerText = operatorVal;
+    mode = 'b';
+    displayB.innerText = value;
+    integerA = displayB.innerText;
     return value;
 };
 
