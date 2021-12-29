@@ -74,6 +74,7 @@ function operate(a, o, b) {
     };
     display.innerText = value;
     integerA = display.innerText;
+    console.log(value);
     return value;
 };
 
