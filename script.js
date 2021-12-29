@@ -12,8 +12,10 @@ integers.forEach(integer => {
         if(mode === 'a') {
             integerA = integerA + integer.innerText;
             displayB.innerText = integerA;
-        } else {
+        } else if(mode === 'b') {
             integerB = integerB + integer.innerText;
+            displayB.innerText = integerB;
+        } else {
             displayB.innerText = integerB;
         };
     });
@@ -29,8 +31,10 @@ operators.forEach(operator => {
             displayA.innerText = displayB.innerText;
             displayB.innerText = 0;
             mode = 'b';
-        } else {
+        } else if(mode === 'b') {
             operatorVal = operator.innerText;
+            displayOperator.innerText = operatorVal;
+        } else {
             displayOperator.innerText = operatorVal;
         };
     });
@@ -38,7 +42,9 @@ operators.forEach(operator => {
 
 const equals = document.getElementById('equals')
 equals.addEventListener('click', event => {
-    operate(integerA, operatorVal, integerB);
+    if(mode === 'a' || mode === 'b') {
+        operate(integerA, operatorVal, integerB);
+    };
 });
 
 const backspace = document.getElementById('backspace');
@@ -46,7 +52,7 @@ backspace.addEventListener('click', event => {
     displayB.innerText = displayB.innerText.slice(0,(displayB.innerText.length-1));
     if(mode === 'a') {
         integerA = displayB.innerText;
-    } else {
+    } else if(mode === 'b') {
         integerB = displayB.innerText;
     };
 });
@@ -77,10 +83,15 @@ function operate(a, o, b) {
         value = divide(a, b);
     };
     let temp = operatorVal;
+    let modeCCheck = (mode === 'c')
     reset();
     operatorVal = temp;
     displayOperator.innerText = operatorVal;
     mode = 'b';
+    if (modeCCheck === true) {
+        mode = 'c';
+        modeCCheck = false;
+    };
     displayA.innerText = value;
     integerA = displayA.innerText;
 };
@@ -96,6 +107,7 @@ function multiply(a, b) {
 function divide(a, b) {
     if(b === '0') {
         reset();
+        mode = 'c';
         return 'Nice Try!';
     } else {
     return a/b;
