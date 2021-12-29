@@ -1,18 +1,22 @@
-const display = document.getElementById('display');
+const displayA = document.getElementById('displaya');
 
-let integerA;
-let integerB;
+let integerA = '';
+let integerB = '';
+let mode = 'a';
 
 const integers = document.querySelectorAll('.integer');
 
 integers.forEach(integer => {
     integer.addEventListener('click', event => {
-        if(integerA === undefined) {
-            integerA = integer.innerText;
-        } else {
-            integerB = integer.innerText;
+        if(mode === 'a') {
+            integerA = integerA + integer.innerText;
+            displayA.innerText = integerA;
+            console.log(`${integerA}, ${integerB}`);
+        } else if(mode === 'b') {
+            integerB = integerB + integer.innerText;
+            displayA.innerText = integerB;
+            console.log(`${integerA}, ${integerB}`);
         }
-        console.log(`${integerA}, ${integerB}`);
     });
 });
 
@@ -20,6 +24,7 @@ let operatorVal;
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
+        mode = 'b';
         operatorVal = operator.innerText;
         console.log(operatorVal);
     });
@@ -33,14 +38,14 @@ equals.addEventListener('click', event => {
 
 const clear = document.getElementById('clear');
 clear.addEventListener('click', function clear() {
-    display.innerText = '0';
+    displayA.innerText = '0';
     reset();
 });
 
 function reset() {
-    integerA = undefined;
-    integerB = undefined;
-    operatorVal = undefined;
+    integerA = '';
+    integerB = '';
+    operatorVal = '';
 }
 
 function add(a, b) {
@@ -69,14 +74,12 @@ function operate(a, o, b) {
         value = multiply(a, b);
     } else if(o === '/') {
         value = divide(a, b);
-    } else {
-        value = undefined;
     };
-    display.innerText = value;
-    integerA = display.innerText;
+    displayA.innerText = value;
+    integerA = '';
     console.log(value);
     return value;
 };
 
-// add the ability for the calculator to display a when a is pressed and not b and then =
+// add a second display, one for currently working on number and another for number not working on, add a span to store selected operator
 // add the ability to type longer numbers than single digits *may require changes to the current a/b system
