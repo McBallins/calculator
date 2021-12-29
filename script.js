@@ -91,10 +91,20 @@ function subtract(a, b) {
     return a-b;
 };
 function multiply(a, b) {
-    return a*b;
+        return a*b;
 };
 function divide(a, b) {
+    if(b === '0') {
+        reset();
+        return 'Nice Try!';
+    } else {
     return a/b;
+    };
 };
 
-// mostly need to work on css now
+// round long numbers
+// disable = before it is ready to be used
+// dividing by 0 should disable everything until clear is pressed.
+// add decimal support
+// add keyboard support
+// make it pretty with css
