@@ -12,12 +12,10 @@ integers.forEach(integer => {
     integer.addEventListener('click', event => {
         if(mode === 'a') {
             integerA = integerA + integer.innerText;
-            displayA.innerText = integerA;
-            console.log(`${integerA}, ${integerB}`);
-        } else if(mode === 'b') {
+            displayB.innerText = integerA;
+        } else {
             integerB = integerB + integer.innerText;
-            displayA.innerText = integerB;
-            console.log(`${integerA}, ${integerB}`);
+            displayB.innerText = integerB;
         }
     });
 });
@@ -26,12 +24,16 @@ let operatorVal;
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
-        mode = 'b';
-        displayB.innerText = displayA.innerText;
-        displayA.innerText = '';
-        operatorVal = operator.innerText;
-        displayOperator.innerText = operatorVal;
-        console.log(operatorVal);
+        if(mode === 'a') {
+            operatorVal = operator.innerText;
+            displayOperator.innerText = operatorVal;
+            displayA.innerText = displayB.innerText;
+            displayB.innerText = 0;
+            mode = 'b';
+        } else {
+            operatorVal = operator.innerText;
+            displayOperator.innerText = operatorVal;
+        }
     });
 });
 
@@ -42,7 +44,7 @@ equals.addEventListener('click', event => {
 
 
 const clear = document.getElementById('clear');
-clear.addEventListener('click', function clear() {
+clear.addEventListener('click', event => {
     reset();
 });
 
@@ -50,7 +52,7 @@ function reset() {
     integerA = '';
     integerB = '';
     operatorVal = '';
-    displayA.innerText = '0';
+    displayA.innerText = '';
     displayB.innerText = '';
     displayOperator.innerText = '';
     mode = 'a';
@@ -88,10 +90,6 @@ function operate(a, o, b) {
     operatorVal = temp;
     displayOperator.innerText = operatorVal;
     mode = 'b';
-    displayB.innerText = value;
-    integerA = displayB.innerText;
-    return value;
+    displayA.innerText = value;
+    integerA = displayA.innerText;
 };
-
-// add a second display, one for currently working on number and another for number not working on, add a span to store selected operator
-// add the ability to type longer numbers than single digits *may require changes to the current a/b system
