@@ -42,7 +42,7 @@ operators.forEach(operator => {
 
 const equals = document.getElementById('equals')
 equals.addEventListener('click', event => {
-    if(mode === 'a' || mode === 'b') {
+    if((mode === 'a' || mode === 'b') && (displayA.innerText !== '') && (displayB.innerText !== '') && (displayOperator.innerText !== '')) {
         operate(integerA, operatorVal, integerB);
     };
 });
@@ -116,7 +116,6 @@ function divide(a, b) {
 
 // round long numbers
 // disable = before it is ready to be used
-// dividing by 0 should disable everything until clear is pressed.
 // add decimal support
 // add keyboard support
 // make it pretty with css
