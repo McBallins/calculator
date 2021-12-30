@@ -1,4 +1,9 @@
+html {
+    background-color: black;
+}
+
 #calculator {
+    background-color: greenyellow;
     height: 96vh;
     width: 98vw;
     margin: auto;
@@ -46,6 +51,7 @@
 .integer, #backspace, #decimal {
     width: 25%;
     font-size: 10vh;
+    background-color: khaki;
 }
 
 #integers {
@@ -63,6 +69,7 @@
     height: 33.3%;
     width: 50%;
     font-size: 10vh;
+    background-color: darkkhaki;
 }
 
 #operators {
@@ -72,5 +79,3 @@
     flex-direction: column;
     flex-wrap: wrap;
 }
-
-/* text is too large in a small window, the text size needs to be change to automatically adjust */
