@@ -68,24 +68,24 @@ function round(n) {
     return n;
 };
 
-let operatorVal;
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
-        if(mode === 'a') {
-            operatorVal = operator.textContent;
-            displayOperator.textContent = operatorVal;
-            displayA.textContent = displayB.textContent;
-            displayB.textContent = '0';
-            integerB = 0;
-            mode = 'b';
-        } else if(mode === 'b') {
-            calculate();
-            operatorVal = operator.textContent;
-            displayOperator.textContent = operatorVal;
-        };
+        selectOperator(operator.textContent);
     });
 });
+function selectOperator(operator) {
+    if(mode === 'a') {
+        displayOperator.textContent = operator;
+        displayA.textContent = displayB.textContent;
+        displayB.textContent = '0';
+        integerB = 0;
+        mode = 'b';
+    } else if(mode === 'b') {
+        calculate();
+        displayOperator.textContent = operator;
+    };
+}
 
 const equals = document.getElementById('equals')
 equals.addEventListener('click', event => {
@@ -93,7 +93,7 @@ equals.addEventListener('click', event => {
 });
 function calculate() {
     if((mode === 'a' || mode === 'b') && (displayA.textContent !== '') && (displayB.textContent !== '') && (displayOperator.textContent !== '')) {
-        operate(integerA, operatorVal, integerB);
+        operate(integerA, displayOperator.textContent, integerB);
     };
 }
 
@@ -115,7 +115,6 @@ clear.addEventListener('click', event => {
 function reset() {
     integerA = '0';
     integerB = '0';
-    operatorVal = '';
     displayA.textContent = '';
     displayB.textContent = '0';
     displayOperator.textContent = '';
@@ -134,11 +133,10 @@ function operate(a, o, b) {
     } else if(o === '/') {
         value = divide(a, b);
     };
-    let temp = operatorVal;
+    let temp = displayOperator.textContent;
     let modeCCheck = (mode === 'c')
     reset();
-    operatorVal = temp;
-    displayOperator.textContent = operatorVal;
+    displayOperator.textContent = temp;
     mode = 'b';
     if (modeCCheck === true) {
         mode = 'c';
@@ -149,7 +147,12 @@ function operate(a, o, b) {
         displayA.textContent = value;
         displayB.textContent = '';
     } else {
-        displayA.textContent = round(value.toString());
+        if(value.length > 10 && /[.]/.test(value)) {
+            value = Math.round(value*10000000000)/10000000000;
+        } else {
+            value = round(value);
+        }
+        displayA.textContent = value;
     };
 };
 function add(a, b) {
@@ -177,14 +180,19 @@ function divide(a, b) {
 // Adding keyboard support down here
 
 document.addEventListener('keydown', e => {
-    if(/Digit/.test(e.code)) {
+    if(/Digit[0-9]/.test(e.code)) {
     addDigits(e.code.slice(5, 6));
     };
-    if(/Numpad/.test(e.code)) {
+    if(/Numpad[0-9]/.test(e.code)) {
         addDigits(e.code.slice(6, 7));
     };
 
     // operators
+    if(/Minus/.test(e.code) || /NumpadSubtract/.test(e.code)) {
+        
+    };
+    console.log(e.code);
+
 
     // decimal
 
@@ -193,7 +201,4 @@ document.addEventListener('keydown', e => {
     // equals (enter)
 
 });
-
-// decimal system still needs work 7/9 returns ...777777778, rather than .77777777...
-
 // make it pretty with css
