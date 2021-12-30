@@ -15,11 +15,15 @@ integers.forEach(integer => {
         } else if(mode === 'b') {
             integerB = integerB + integer.innerText;
             displayB.innerText = integerB;
-        } else {
-            displayB.innerText = integerB;
         };
     });
 });
+
+let decimalAvaiable = true;
+const decimal = document.getElementById('decimal');
+decimal.addEventListener('click', event => {
+    
+})
 
 let operatorVal;
 const operators = document.querySelectorAll('.operator');
@@ -29,12 +33,11 @@ operators.forEach(operator => {
             operatorVal = operator.innerText;
             displayOperator.innerText = operatorVal;
             displayA.innerText = displayB.innerText;
-            displayB.innerText = 0;
+            displayB.innerText = '';
             mode = 'b';
         } else if(mode === 'b') {
+            calculate();
             operatorVal = operator.innerText;
-            displayOperator.innerText = operatorVal;
-        } else {
             displayOperator.innerText = operatorVal;
         };
     });
@@ -42,10 +45,13 @@ operators.forEach(operator => {
 
 const equals = document.getElementById('equals')
 equals.addEventListener('click', event => {
+    calculate();
+});
+function calculate() {
     if((mode === 'a' || mode === 'b') && (displayA.innerText !== '') && (displayB.innerText !== '') && (displayOperator.innerText !== '')) {
         operate(integerA, operatorVal, integerB);
     };
-});
+}
 
 const backspace = document.getElementById('backspace');
 backspace.addEventListener('click', event => {
@@ -69,6 +75,7 @@ function reset() {
     displayB.innerText = '';
     displayOperator.innerText = '';
     mode = 'a';
+    decimalAvaiable = true;
 };
 
 function operate(a, o, b) {
@@ -115,7 +122,6 @@ function divide(a, b) {
 };
 
 // round long numbers
-// disable = before it is ready to be used
 // add decimal support
-// add keyboard support
+// add keyboard support 
 // make it pretty with css
