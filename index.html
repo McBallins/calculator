@@ -8,29 +8,37 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <button class="integer">1</button>
-    <button class="integer">2</button>
-    <button class="integer">3</button>
-    <button class="integer">4</button>
-    <button class="integer">5</button>
-    <button class="integer">6</button>
-    <button class="integer">7</button>
-    <button class="integer">8</button>
-    <button class="integer">9</button>
-    <button class="integer">0</button>
-    <button id="decimal">.</button>
-    <button class="operator">+</button>
-    <button class="operator">-</button>
-    <button class="operator">*</button>
-    <button class="operator">/</button>
-    <button id="equals">=</button>
-    <div>
-      <div id="displaya"></div>
-      <div id="displayoperator"></div>
-      <div id="displayb">0123456789</div>
+    <div id="calculator">
+      <div id="integers-and-display"></div>
+        <div id="masterdisplay">
+          <div id="displaya"></div>
+          <div id="displayoperator"></div>
+          <div id="displayb">0123456789</div>
+        </div>
+      </div>
+      <div id="integers">
+        <button class="integer">1</button>
+        <button class="integer">2</button>
+        <button class="integer">3</button>
+        <button class="integer">4</button>
+        <button class="integer">5</button>
+        <button class="integer">6</button>
+        <button class="integer">7</button>
+        <button class="integer">8</button>
+        <button class="integer">9</button>
+        <button class="integer">0</button>
+        <button id="backspace">Backspace</button>
+        <button id="decimal">.</button>
+      </div>
+      <div id="operators">
+        <button class="operator">+</button>
+        <button class="operator">-</button>
+        <button class="operator">*</button>
+        <button class="operator">/</button>
+        <button id="clear">Clear</button>
+        <button id="equals">=</button>
+      </div>
     </div>
-    <button id="backspace">Backspace</button>
-    <button id="clear">Clear</button>
   	<script src="script.js"></script>
   </body>
 </html>
