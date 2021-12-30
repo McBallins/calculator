@@ -9,15 +9,19 @@ let integerB = '0';
 const integers = document.querySelectorAll('.integer');
 integers.forEach(integer => {
     integer.addEventListener('click', event => {
-        if(mode === 'a') {
-            integerA = integerA + integer.innerText;
-            displayB.innerText = round(integerA);
-        } else if(mode === 'b') {
-            integerB = integerB + integer.innerText;
-            displayB.innerText = round(integerB);
-        };
+        addDigits(integer.textContent);
     });
 });
+
+function addDigits(digit) {
+    if(mode === 'a') {
+        integerA += digit;
+        displayB.textContent = round(integerA);
+    } else if(mode === 'b') {
+        integerB += digit;
+        displayB.textContent = round(integerB);
+    };
+}
 
 let decimalAvaiable = true;
 const decimal = document.getElementById('decimal');
@@ -29,7 +33,7 @@ decimal.addEventListener('click', event => {
         } else {
             integerA = integerA + '.';
         };
-        displayB.innerText = integerA;
+        displayB.textContent = integerA;
         decimalAvaiable = false;
     } else if(mode === 'b') {
         if(integerA === '' || integerA === '0') {
@@ -37,13 +41,13 @@ decimal.addEventListener('click', event => {
         } else {
             integerB = integerB + '.';
         };
-        displayB.innerText = integerB;
+        displayB.textContent = integerB;
         decimalAvaiable = false;
     };
 });
 
 function round(n) {
-    if(((/[.]/).test(n)) !== true) {
+    if((/[.]/.test(n)) !== true) {
         n = (n*1/1).toString();
     };
     if(n.length > 10) {
@@ -69,15 +73,15 @@ const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
         if(mode === 'a') {
-            operatorVal = operator.innerText;
-            displayOperator.innerText = operatorVal;
-            displayA.innerText = displayB.innerText;
-            displayB.innerText = '0';
+            operatorVal = operator.textContent;
+            displayOperator.textContent = operatorVal;
+            displayA.textContent = displayB.textContent;
+            displayB.textContent = '0';
             mode = 'b';
         } else if(mode === 'b') {
             calculate();
-            operatorVal = operator.innerText;
-            displayOperator.innerText = operatorVal;
+            operatorVal = operator.textContent;
+            displayOperator.textContent = operatorVal;
         };
     });
 });
@@ -87,7 +91,7 @@ equals.addEventListener('click', event => {
     calculate();
 });
 function calculate() {
-    if((mode === 'a' || mode === 'b') && (displayA.innerText !== '') && (displayB.innerText !== '') && (displayOperator.innerText !== '')) {
+    if((mode === 'a' || mode === 'b') && (displayA.textContent !== '') && (displayB.textContent !== '') && (displayOperator.textContent !== '')) {
         operate(integerA, operatorVal, integerB);
     };
 }
@@ -96,10 +100,10 @@ const backspace = document.getElementById('backspace');
 backspace.addEventListener('click', event => {
     if(mode === 'a') {
         integerA = integerA.slice(0,integerA.length-1);
-        displayB.innerText = round(integerA);
+        displayB.textContent = round(integerA);
     } else if(mode === 'b') {
         integerB = integerA.slice(0,integerB.length-1);
-        displayB.innerText = round(integerB);
+        displayB.textContent = round(integerB);
     };
 });
 
@@ -111,9 +115,9 @@ function reset() {
     integerA = '0';
     integerB = '0';
     operatorVal = '';
-    displayA.innerText = '';
-    displayB.innerText = '0';
-    displayOperator.innerText = '';
+    displayA.textContent = '';
+    displayB.textContent = '0';
+    displayOperator.textContent = '';
     mode = 'a';
     decimalAvaiable = true;
 };
@@ -133,14 +137,14 @@ function operate(a, o, b) {
     let modeCCheck = (mode === 'c')
     reset();
     operatorVal = temp;
-    displayOperator.innerText = operatorVal;
+    displayOperator.textContent = operatorVal;
     mode = 'b';
     if (modeCCheck === true) {
         mode = 'c';
         modeCCheck = false;
     };
     integerA = value;
-    displayA.innerText = round(value.toString());
+    displayA.textContent = round(value.toString());
 };
 function add(a, b) {
     return Number(a)+Number(b);
@@ -162,5 +166,23 @@ function divide(a, b) {
 };
 
 // Adding keyboard support down here
+
+document.addEventListener('keydown', e => {
+    if(/Digit/.test(e.code)) {
+    addDigits(e.code.slice(5, 6));
+    };
+    if(/Numpad/.test(e.code)) {
+        addDigits(e.code.slice(6, 7));
+    };
+
+    // operators
+
+    // decimal
+
+    // backspace
+
+    // equals (enter)
+
+});
 
 // make it pretty with css
