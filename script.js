@@ -4,17 +4,17 @@ const displayA = document.getElementById('displaya');
 const displayB = document.getElementById('displayb');
 const displayOperator = document.getElementById('displayoperator');
 
-let integerA = '';
-let integerB = '';
+let integerA = '0';
+let integerB = '0';
 const integers = document.querySelectorAll('.integer');
 integers.forEach(integer => {
     integer.addEventListener('click', event => {
         if(mode === 'a') {
             integerA = integerA + integer.innerText;
-            displayB.innerText = integerA;
+            displayB.innerText = round(integerA);
         } else if(mode === 'b') {
             integerB = integerB + integer.innerText;
-            displayB.innerText = integerB;
+            displayB.innerText = round(integerB);
         };
     });
 });
@@ -23,7 +23,8 @@ let decimalAvaiable = true;
 const decimal = document.getElementById('decimal');
 decimal.addEventListener('click', event => {
     if(mode === 'a' && decimalAvaiable) {
-        if(integerA === '' || integerA === '0') {
+        integerA = round(integerA);
+        if(integerA === '') {
             integerA = integerA + '0.';
         } else {
             integerA = integerA + '.';
@@ -41,6 +42,28 @@ decimal.addEventListener('click', event => {
     };
 });
 
+function round(n) {
+    if(((/[.]/).test(n)) !== true) {
+        n = (n*1/1).toString();
+    };
+    if(n.length > 10) {
+        if(n < 1) {
+            n =  '...' + n.slice(n.length - 8);
+            return n;
+        } else {
+            if(((/[.]/).test(n))) {
+                n =  '...' + n.slice(n.length - 8);
+                return n;
+            } else {
+                const sliceValue = (n.length - 3).toString().length;
+                n = n.slice(0, 8 - sliceValue) + `E+${n.length - 7}`;
+                return n;
+            };
+        }
+    };
+    return n;
+};
+
 let operatorVal;
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
@@ -49,7 +72,7 @@ operators.forEach(operator => {
             operatorVal = operator.innerText;
             displayOperator.innerText = operatorVal;
             displayA.innerText = displayB.innerText;
-            displayB.innerText = '';
+            displayB.innerText = '0';
             mode = 'b';
         } else if(mode === 'b') {
             calculate();
@@ -71,11 +94,12 @@ function calculate() {
 
 const backspace = document.getElementById('backspace');
 backspace.addEventListener('click', event => {
-    displayB.innerText = displayB.innerText.slice(0,(displayB.innerText.length-1));
     if(mode === 'a') {
-        integerA = displayB.innerText;
+        integerA = integerA.slice(0,integerA.length-1);
+        displayB.innerText = round(integerA);
     } else if(mode === 'b') {
-        integerB = displayB.innerText;
+        integerB = integerA.slice(0,integerB.length-1);
+        displayB.innerText = round(integerB);
     };
 });
 
@@ -84,11 +108,11 @@ clear.addEventListener('click', event => {
     reset();
 });
 function reset() {
-    integerA = '';
-    integerB = '';
+    integerA = '0';
+    integerB = '0';
     operatorVal = '';
     displayA.innerText = '';
-    displayB.innerText = '';
+    displayB.innerText = '0';
     displayOperator.innerText = '';
     mode = 'a';
     decimalAvaiable = true;
@@ -115,8 +139,8 @@ function operate(a, o, b) {
         mode = 'c';
         modeCCheck = false;
     };
-    displayA.innerText = value;
-    integerA = displayA.innerText;
+    integerA = value;
+    displayA.innerText = round(value.toString());
 };
 function add(a, b) {
     return Number(a)+Number(b);
@@ -137,7 +161,6 @@ function divide(a, b) {
     };
 };
 
-// round long numbers
-// add decimal support
-// add keyboard support 
+// Adding keyboard support down here
+
 // make it pretty with css
