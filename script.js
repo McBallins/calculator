@@ -6,13 +6,6 @@ const displayOperator = document.getElementById('displayoperator');
 
 let integerA = '0';
 let integerB = '0';
-const integers = document.querySelectorAll('.integer');
-integers.forEach(integer => {
-    integer.addEventListener('click', event => {
-        addDigits(integer.textContent);
-    });
-});
-
 function addDigits(digit) {
     if(mode === 'a') {
         integerA += digit;
@@ -22,28 +15,97 @@ function addDigits(digit) {
         displayB.textContent = round(integerB);
     };
 }
+const integers = document.querySelectorAll('.integer');
+integers.forEach(integer => {
+    integer.addEventListener('click', event => {
+        addDigits(integer.textContent);
+    });
+});
 
-let decimalAvaiable = true;
-const decimal = document.getElementById('decimal');
-decimal.addEventListener('click', event => {
+function placeDecimal() {
     if(mode === 'a' && decimalAvaiable) {
         integerA = round(integerA);
         if(integerA === '') {
-            integerA = integerA + '0.';
+            integerA += '0.';
         } else {
-            integerA = integerA + '.';
+            integerA += '.';
         };
         displayB.textContent = integerA;
         decimalAvaiable = false;
-    } else if(mode === 'b') {
-        if(integerA === '' || integerA === '0') {
-            integerB = integerB + '0.';
+    } else if(mode === 'b' && decimalAvaiable) {
+        integerB = round(integerB);
+        if(integerB === '') {
+            integerB += '0.';
         } else {
-            integerB = integerB + '.';
+            integerB += '.';
         };
         displayB.textContent = integerB;
         decimalAvaiable = false;
     };
+};
+let decimalAvaiable = true;
+const decimal = document.getElementById('decimal');
+decimal.addEventListener('click', event => {
+    placeDecimal();
+});
+
+function selectOperator(operator) {
+    if(mode === 'a') {
+        displayOperator.textContent = operator;
+        displayA.textContent = displayB.textContent;
+        displayB.textContent = '0';
+        integerB = 0;
+        mode = 'b';
+        decimalAvaiable = true;
+    } else if(mode === 'b') {
+        calculate();
+        displayOperator.textContent = operator;
+        decimalAvaiable = true;
+    };
+}
+const operators = document.querySelectorAll('.operator');
+operators.forEach(operator => {
+    operator.addEventListener('click', event => {
+        selectOperator(operator.textContent);
+    });
+});
+
+function calculate() {
+    if((mode === 'a' || mode === 'b') && (displayA.textContent !== '') && (displayB.textContent !== '') && (displayOperator.textContent !== '')) {
+        operate(integerA, displayOperator.textContent, integerB);
+    };
+}
+const equals = document.getElementById('equals')
+equals.addEventListener('click', event => {
+    calculate();
+});
+
+function undo() {
+    if(mode === 'a') {
+        integerA = integerA.slice(0,integerA.length-1);
+        displayB.textContent = round(integerA);
+    } else if(mode === 'b') {
+        integerB = integerB.slice(0,integerB.length-1);
+        displayB.textContent = round(integerB);
+    };
+}
+const backspace = document.getElementById('backspace');
+backspace.addEventListener('click', event => {
+    undo();
+});
+
+function reset() {
+    integerA = '0';
+    integerB = '0';
+    displayA.textContent = '';
+    displayB.textContent = '0';
+    displayOperator.textContent = '';
+    mode = 'a';
+    decimalAvaiable = true;
+};
+const clear = document.getElementById('clear');
+clear.addEventListener('click', event => {
+    reset();
 });
 
 function round(n) {
@@ -52,7 +114,7 @@ function round(n) {
     };
     if(n.length > 10) {
         if(n < 1) {
-            n =  '...' + n.slice(n.length - 8);
+            n =  '...' + n.slice(n.length - 7);
             return n;
         } else {
             if(((/[.]/).test(n))) {
@@ -66,60 +128,6 @@ function round(n) {
         }
     };
     return n;
-};
-
-const operators = document.querySelectorAll('.operator');
-operators.forEach(operator => {
-    operator.addEventListener('click', event => {
-        selectOperator(operator.textContent);
-    });
-});
-function selectOperator(operator) {
-    if(mode === 'a') {
-        displayOperator.textContent = operator;
-        displayA.textContent = displayB.textContent;
-        displayB.textContent = '0';
-        integerB = 0;
-        mode = 'b';
-    } else if(mode === 'b') {
-        calculate();
-        displayOperator.textContent = operator;
-    };
-}
-
-const equals = document.getElementById('equals')
-equals.addEventListener('click', event => {
-    calculate();
-});
-function calculate() {
-    if((mode === 'a' || mode === 'b') && (displayA.textContent !== '') && (displayB.textContent !== '') && (displayOperator.textContent !== '')) {
-        operate(integerA, displayOperator.textContent, integerB);
-    };
-}
-
-const backspace = document.getElementById('backspace');
-backspace.addEventListener('click', event => {
-    if(mode === 'a') {
-        integerA = integerA.slice(0,integerA.length-1);
-        displayB.textContent = round(integerA);
-    } else if(mode === 'b') {
-        integerB = integerA.slice(0,integerB.length-1);
-        displayB.textContent = round(integerB);
-    };
-});
-
-const clear = document.getElementById('clear');
-clear.addEventListener('click', event => {
-    reset();
-});
-function reset() {
-    integerA = '0';
-    integerB = '0';
-    displayA.textContent = '';
-    displayB.textContent = '0';
-    displayOperator.textContent = '';
-    mode = 'a';
-    decimalAvaiable = true;
 };
 
 function operate(a, o, b) {
@@ -147,8 +155,8 @@ function operate(a, o, b) {
         displayA.textContent = value;
         displayB.textContent = '';
     } else {
-        if(value.length > 10 && /[.]/.test(value)) {
-            value = Math.round(value*10000000000)/10000000000;
+        if((value+'').length > 10 && /[.]/.test(value)) {
+            value = Math.round(value*100000000)/100000000;
         } else {
             value = round(value);
         }
@@ -177,28 +185,32 @@ function divide(a, b) {
     };
 };
 
-// Adding keyboard support down here
-
 document.addEventListener('keydown', e => {
     if(/Digit[0-9]/.test(e.code)) {
-    addDigits(e.code.slice(5, 6));
+        addDigits(e.code.slice(5, 6));
     };
     if(/Numpad[0-9]/.test(e.code)) {
         addDigits(e.code.slice(6, 7));
     };
-
-    // operators
-    if(/Minus/.test(e.code) || /NumpadSubtract/.test(e.code)) {
-        
+    if(/NumpadPlus/.test(e.code)) {
+        selectOperator('+');
     };
-    console.log(e.code);
-
-
-    // decimal
-
-    // backspace
-
-    // equals (enter)
-
+    if(/Minus/.test(e.code) || /NumpadSubtract/.test(e.code)) {
+        selectOperator('-');
+    };
+    if(/NumpadMultiply/.test(e.code)) {
+        selectOperator('*');
+    };
+    if(/Slash/.test(e.code) || /NumpadDivide/.test(e.code)) {
+        selectOperator('/');
+    };
+    if(/Period/.test(e.code) || /NumpadDecimal/.test(e.code)) {
+        placeDecimal();
+    };
+    if(/Backspace/.test(e.code)) {
+        undo();
+    };
+    if(/Equal/.test(e.code) || /Enter/.test(e.code)) {
+        calculate();
+    };
 });
-// make it pretty with css
