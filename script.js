@@ -22,8 +22,24 @@ integers.forEach(integer => {
 let decimalAvaiable = true;
 const decimal = document.getElementById('decimal');
 decimal.addEventListener('click', event => {
-    
-})
+    if(mode === 'a' && decimalAvaiable) {
+        if(integerA === '' || integerA === '0') {
+            integerA = integerA + '0.';
+        } else {
+            integerA = integerA + '.';
+        };
+        displayB.innerText = integerA;
+        decimalAvaiable = false;
+    } else if(mode === 'b') {
+        if(integerA === '' || integerA === '0') {
+            integerB = integerB + '0.';
+        } else {
+            integerB = integerB + '.';
+        };
+        displayB.innerText = integerB;
+        decimalAvaiable = false;
+    };
+});
 
 let operatorVal;
 const operators = document.querySelectorAll('.operator');
