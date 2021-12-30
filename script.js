@@ -77,6 +77,7 @@ operators.forEach(operator => {
             displayOperator.textContent = operatorVal;
             displayA.textContent = displayB.textContent;
             displayB.textContent = '0';
+            integerB = 0;
             mode = 'b';
         } else if(mode === 'b') {
             calculate();
@@ -144,7 +145,12 @@ function operate(a, o, b) {
         modeCCheck = false;
     };
     integerA = value;
-    displayA.textContent = round(value.toString());
+    if(value === 'Nice Try!') {
+        displayA.textContent = value;
+        displayB.textContent = '';
+    } else {
+        displayA.textContent = round(value.toString());
+    };
 };
 function add(a, b) {
     return Number(a)+Number(b);
@@ -156,7 +162,10 @@ function multiply(a, b) {
         return a*b;
 };
 function divide(a, b) {
-    if(b === '0') {
+    if(b == 0) {
+        console.log(b);
+        round(b);
+        console.log(b);
         reset();
         mode = 'c';
         return 'Nice Try!';
@@ -184,5 +193,7 @@ document.addEventListener('keydown', e => {
     // equals (enter)
 
 });
+
+// decimal system still needs work 7/9 returns ...777777778, rather than .77777777...
 
 // make it pretty with css
