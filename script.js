@@ -111,7 +111,8 @@ clear.addEventListener('click', event => {
 function round(n) {
     if((/[.]/.test(n)) !== true) {
         n = (n*1/1).toString();
-    };
+    }
+    return n;
 };
 
 function operate(a, o, b) {
