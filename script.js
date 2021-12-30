@@ -112,22 +112,6 @@ function round(n) {
     if((/[.]/.test(n)) !== true) {
         n = (n*1/1).toString();
     };
-    if(n.length > 10) {
-        if(n < 1) {
-            n =  '...' + n.slice(n.length - 7);
-            return n;
-        } else {
-            if(((/[.]/).test(n))) {
-                n =  '...' + n.slice(n.length - 8);
-                return n;
-            } else {
-                const sliceValue = (n.length - 3).toString().length;
-                n = n.slice(0, 8 - sliceValue) + `E+${n.length - 7}`;
-                return n;
-            };
-        }
-    };
-    return n;
 };
 
 function operate(a, o, b) {
