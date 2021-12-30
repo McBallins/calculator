@@ -84,35 +84,78 @@ hr {
     margin:1em 0;
     padding:0;
 }
+#calculator, #integersanddisplay, #masterdisplay, #integers, #operators {
+}
 
 #calculator {
-    border: 1px solid black;
     height: 96vh;
     width: 98vw;
     margin: auto;
     margin-top: 2vh;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
-#integersanddisplay {
-    width: 65vw;
+#integers-and-display {
     height: 96vh;
-    display: inline-block;
+    width: 65vw;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #masterdisplay {
+    height: 34%;
+    width: 100%;
     border: 1px solid black;
-    display: inline-block;
-    height: 30vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#displaya, #displayb, #displayoperator {
+    border:1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 64px;
+}
+
+#bottomscreen {
+    display: flex;
+    height: 50%;
+}
+
+#displaya, #displayb {
+    height: 100%;
+    width: 100%;
+}
+
+#displayoperator {
+    height: 11vh;
+    width: 11vh;
+    align-self: flex-end;
 }
 
 #integers {
-    border: 1px solid black;
-    display: inline-block;
+    height: 66%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.integer, #backspace, #decimal {
+    width: 25%;
+    flex-grow: 1;
 }
 
 #operators {
-    border: 1px solid black;
-    display: inline-block;
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.operator, #equals, #clear {
+    height: 33.3%;
+    width: 50%;
 }
