@@ -61,10 +61,6 @@ html {
     flex-wrap: wrap;
 }
 
-#backspace {
-    font-size: 5vh;
-}
-
 .operator, #equals, #clear {
     height: 33.3%;
     width: 50%;
