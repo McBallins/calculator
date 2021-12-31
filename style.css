@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
 html {
-    background-color: black;
+    background-color: dimgrey;
 }
 
 #calculator {
     background-color: greenyellow;
-    height: 96vh;
-    width: 98vw;
+    height: 98vh;
+    width: 99vw;
     margin: auto;
-    margin-top: 2vh;
+    margin-top: 1vh;
     display: flex;
 }
 
@@ -19,16 +19,17 @@ font-family: 'Russo One', sans-serif;
 }
 
 #integers-and-display {
-    height: 96vh;
+    height: 98vh;
     width: 65vw;
     display: flex;
     flex-wrap: wrap;
 }
 
 #masterdisplay {
-    height: 33%;
+    box-sizing: border-box;
+    height: 33.3%;
     width: 100%;
-    border: 1px solid black;
+    border: 0.5vh solid black;
     display: flex;
     flex-direction: column;
 }
